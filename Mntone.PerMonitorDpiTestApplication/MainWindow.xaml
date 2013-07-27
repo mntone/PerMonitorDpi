@@ -5,7 +5,7 @@
 	xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 	xmlns:local="clr-namespace:Mntone.PerMonitorDpiTestApplication"
     Title="Per monitor dpi testing application"
-	Height="480"
+	Height="560"
 	Width="440"
 	Background="{DynamicResource {x:Static SystemColors.MenuBarBrushKey}}"
 	FontSize="14"
@@ -47,6 +47,12 @@
 				<RowDefinition/>
 				<RowDefinition Height="7"/>
 				<RowDefinition/>
+				<RowDefinition Height="11"/>
+				<RowDefinition/>
+				<RowDefinition Height="7"/>
+				<RowDefinition/>
+				<RowDefinition Height="7"/>
+				<RowDefinition/>
 			</Grid.RowDefinitions>
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition/>
@@ -60,7 +66,7 @@
 
 			<TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" Margin="12,0,0,0" x:Name="pda"/>
 
-			<TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5" Text="Virtual: " FontSize="17"/>
+			<TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5" Text="Virtual position (dot/pixel): " FontSize="17"/>
 
 			<TextBlock Grid.Row="6" Grid.Column="0" Text="Y (Top): " HorizontalAlignment="Right"/>
 			<TextBlock Grid.Row="6" Grid.Column="3" Text="X (Left): " HorizontalAlignment="Right"/>
@@ -72,7 +78,7 @@
 			<TextBox Grid.Row="8" Grid.Column="1" x:Name="h"/>
 			<TextBox Grid.Row="8" Grid.Column="4" x:Name="w"/>
 
-			<TextBlock Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="5" Text="EFFECTIVE_DPI (System Value): " FontSize="17"/>
+			<TextBlock Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="5" Text="MDT_EFFECTIVE_DPI (System Value): " FontSize="17"/>
 
 			<TextBlock Grid.Row="12" Grid.Column="0" Text="Y dpi: " HorizontalAlignment="Right"/>
 			<TextBlock Grid.Row="12" Grid.Column="3" Text="X dpi: " HorizontalAlignment="Right"/>
@@ -80,7 +86,7 @@
 			<TextBox Grid.Row="12" Grid.Column="1" x:Name="syd"/>
 			<TextBox Grid.Row="12" Grid.Column="4" x:Name="sxd"/>
 
-			<TextBlock Grid.Row="14" Grid.Column="0" Grid.ColumnSpan="5" Text="ANGULAR_DPI (Limited Value): " FontSize="17"/>
+			<TextBlock Grid.Row="14" Grid.Column="0" Grid.ColumnSpan="5" Text="MDT_ANGULAR_DPI (Limited Value): " FontSize="17"/>
 
 			<TextBlock Grid.Row="16" Grid.Column="0" Text="Y dpi: " HorizontalAlignment="Right"/>
 			<TextBlock Grid.Row="16" Grid.Column="3" Text="X dpi: " HorizontalAlignment="Right"/>
@@ -88,13 +94,23 @@
 			<TextBox Grid.Row="16" Grid.Column="1" x:Name="ayd"/>
 			<TextBox Grid.Row="16" Grid.Column="4" x:Name="axd"/>
 
-			<TextBlock Grid.Row="18" Grid.Column="0" Grid.ColumnSpan="5" Text="RAW_DPI (Unlimited/real Value): " FontSize="17"/>
+			<TextBlock Grid.Row="18" Grid.Column="0" Grid.ColumnSpan="5" Text="MDT_RAW_DPI (Unlimited/real Value): " FontSize="17"/>
 
 			<TextBlock Grid.Row="20" Grid.Column="0" Text="Y dpi: " HorizontalAlignment="Right"/>
 			<TextBlock Grid.Row="20" Grid.Column="3" Text="X dpi: " HorizontalAlignment="Right"/>
 
 			<TextBox Grid.Row="20" Grid.Column="1" x:Name="ryd"/>
 			<TextBox Grid.Row="20" Grid.Column="4" x:Name="rxd"/>
+
+			<TextBlock Grid.Row="22" Grid.Column="0" Grid.ColumnSpan="5" Text="Estimated monitor size: " FontSize="17"/>
+
+			<TextBlock Grid.Row="24" Grid.Column="0" Text="Y inch: " HorizontalAlignment="Right"/>
+			<TextBlock Grid.Row="24" Grid.Column="3" Text="X inch: " HorizontalAlignment="Right"/>
+			<TextBlock Grid.Row="26" Grid.Column="0" Text="Diagonal inch: " HorizontalAlignment="Right"/>
+
+			<TextBox Grid.Row="24" Grid.Column="1" x:Name="yinch"/>
+			<TextBox Grid.Row="24" Grid.Column="4" x:Name="xinch"/>
+			<TextBox Grid.Row="26" Grid.Column="1" x:Name="inch"/>
 		</Grid>
 	</StackPanel>
 </Window>
