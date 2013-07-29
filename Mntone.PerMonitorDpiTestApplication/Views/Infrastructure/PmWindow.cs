@@ -130,16 +130,18 @@ namespace Mntone.PerMonitorDpiTestApplication.Views.Infrastructure
 
 		private void CalcDpi( ref ScaleTransform st, uint y, uint x )
 		{
-			var yd = st.ScaleY = ( double )y / 96.0;
+			var yd = ( double )y / 96.0;
 			if( yd > MaxYDpi )
 				yd = MaxYDpi;
 			else if( yd < MinYDpi )
 				yd = MinYDpi;
-			var xd = st.ScaleX = ( double )x / 96.0;
+			var xd = ( double )x / 96.0;
 			if( xd > MaxXDpi )
 				xd = MaxXDpi;
 			else if( xd < MinXDpi )
 				xd = MinXDpi;
+			st.ScaleY = yd;
+			st.ScaleX = xd;
 			Height *= yd / _dpiY;
 			Width *= xd / _dpiX;
 			_dpiY = yd;
