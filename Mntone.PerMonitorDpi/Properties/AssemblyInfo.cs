@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Mntone.PerMonitorDpi")]
-[assembly: AssemblyCopyright("Copyright ©  2013")]
+[assembly: AssemblyCopyright("Copyright © 2013 mntone and GitHub users")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
