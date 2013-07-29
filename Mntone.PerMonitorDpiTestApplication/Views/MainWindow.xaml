@@ -1,10 +1,10 @@
-﻿<infra:PmWindow
+﻿<pm:PmWindow
 	x:Class="Mntone.PerMonitorDpiTestApplication.Views.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+	xmlns:pm="clr-namespace:Mntone.PerMonitorDpi;assembly=Mntone.PerMonitorDpi"
 	xmlns:local="clr-namespace:Mntone.PerMonitorDpiTestApplication"
-	xmlns:infra="clr-namespace:Mntone.PerMonitorDpiTestApplication.Views.Infrastructure"
     Title="Per monitor dpi testing application"
 	Height="560"
 	Width="440"
@@ -110,4 +110,4 @@
 			<TextBox Grid.Row="26" Grid.Column="1" x:Name="inch"/>
 		</Grid>
 	</StackPanel>
-</infra:PmWindow>
+</pm:PmWindow>

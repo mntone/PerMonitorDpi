@@ -1,14 +1,12 @@
-﻿using Mntone.PerMonitorDpiTestApplication.Views.Infrastructure.Win32;
+﻿using Mntone.PerMonitorDpi.Win32;
 using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
 
-namespace Mntone.PerMonitorDpiTestApplication.Views.Infrastructure
+namespace Mntone.PerMonitorDpi
 {
-	public enum DpiMode: uint { System = 1, LimitedReal, UnlimitedReal }
-
 	public class PmWindow: Window
 	{
 		private double _dpiY = 1.0, _dpiX = 1.0;
@@ -72,7 +70,7 @@ namespace Mntone.PerMonitorDpiTestApplication.Views.Infrastructure
 			case DpiMode.LimitedReal:
 				type = MonitorDpiType.AngularDpi;
 				break;
-			case DpiMode.UnlimitedReal:
+			case DpiMode.Real:
 				type = MonitorDpiType.RawDpi;
 				break;
 			default:
@@ -130,16 +128,20 @@ namespace Mntone.PerMonitorDpiTestApplication.Views.Infrastructure
 
 		private void CalcDpi( ref ScaleTransform st, uint y, uint x )
 		{
-			var yd = ( double )y / 96.0;
-			if( yd > MaxYDpi )
-				yd = MaxYDpi;
-			else if( yd < MinYDpi )
-				yd = MinYDpi;
-			var xd = ( double )x / 96.0;
-			if( xd > MaxXDpi )
-				xd = MaxXDpi;
-			else if( xd < MinXDpi )
-				xd = MinXDpi;
+			var yDpi = ( double )y;
+			if( yDpi > MaxYDpi )
+				yDpi = MaxYDpi;
+			else if( yDpi < MinYDpi )
+				yDpi = MinYDpi;
+
+			var xDpi = ( double )x;
+			if( xDpi > MaxXDpi )
+				xDpi = MaxXDpi;
+			else if( xDpi < MinXDpi )
+				xDpi = MinXDpi;
+
+			var yd = yDpi / 96.0;
+			var xd = xDpi / 96.0;
 			st.ScaleY = yd;
 			st.ScaleX = xd;
 			Height *= yd / _dpiY;

@@ -1,4 +1,4 @@
-﻿using Mntone.PerMonitorDpiTestApplication.Views.Infrastructure;
+﻿using Mntone.PerMonitorDpi;
 using Mntone.PerMonitorDpiTestApplication.Views.Infrastructure.Win32;
 using System;
 using System.Diagnostics;
