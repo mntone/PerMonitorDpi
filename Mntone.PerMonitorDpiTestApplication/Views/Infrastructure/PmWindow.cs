@@ -7,6 +7,8 @@ using System.Windows.Media;
 
 namespace Mntone.PerMonitorDpiTestApplication.Views.Infrastructure
 {
+	public enum DpiMode: uint { System = 1, LimitedReal, UnlimitedReal }
+
 	public class PmWindow: Window
 	{
 		private double _dpiY = 1.0, _dpiX = 1.0;
@@ -43,9 +45,14 @@ namespace Mntone.PerMonitorDpiTestApplication.Views.Infrastructure
 				CheckDpi();
 				break;
 			case WindowMessage.DPICHANGED:
-				var xDpi = NativeHelper.GetHiWord( ( uint )wParam );
-				var yDpi = NativeHelper.GetLoWord( ( uint )wParam );
-				ChangeDpi( yDpi, xDpi );
+				if( DpiMode == DpiMode.System )
+				{
+					var xDpi = NativeHelper.GetHiWord( ( uint )wParam );
+					var yDpi = NativeHelper.GetLoWord( ( uint )wParam );
+					ChangeDpi( yDpi, xDpi );
+				}
+				else
+					CheckDpi();
 				handled = true;
 				break;
 			}
@@ -56,8 +63,24 @@ namespace Mntone.PerMonitorDpiTestApplication.Views.Infrastructure
 		{			
 			var hmonitor = NativeMethods.MonitorFromWindow( _hwndSource.Handle, MonitorDefaultTo.Nearest );
 
+			MonitorDpiType type;
+			switch( DpiMode )
+			{
+			case DpiMode.System:
+				type = MonitorDpiType.EffectiveDpi;
+				break;
+			case DpiMode.LimitedReal:
+				type = MonitorDpiType.AngularDpi;
+				break;
+			case DpiMode.UnlimitedReal:
+				type = MonitorDpiType.RawDpi;
+				break;
+			default:
+				throw new ArgumentException();
+			}
+
 			uint yDpi = 0, xDpi = 0;
-			NativeMethods.GetDpiForMonitor( hmonitor, MonitorDpiType.EffectiveDpi, ref xDpi, ref yDpi );
+			NativeMethods.GetDpiForMonitor( hmonitor, type, ref xDpi, ref yDpi );
 			ChangeDpi( yDpi, xDpi );
 		}
 
@@ -81,6 +104,8 @@ namespace Mntone.PerMonitorDpiTestApplication.Views.Infrastructure
 			}
 			else if( c.LayoutTransform.GetType() == typeof( TransformGroup ) )
 			{
+				bool flag = true;
+
 				var list = ( ( TransformGroup )c.LayoutTransform ).Children;
 				for( var i = 0; i < list.Count; ++i )
 				{
@@ -89,8 +114,16 @@ namespace Mntone.PerMonitorDpiTestApplication.Views.Infrastructure
 						var st = ( ScaleTransform )list[i];
 						CalcDpi( ref st, y, x );
 						list[i] = st;
+						flag = false;
 						break;
 					}
+				}
+
+				if( flag )
+				{
+					var st = new ScaleTransform();
+					CalcDpi( ref st, y, x );
+					list.Add( st );
 				}
 			}
 		}
@@ -98,7 +131,15 @@ namespace Mntone.PerMonitorDpiTestApplication.Views.Infrastructure
 		private void CalcDpi( ref ScaleTransform st, uint y, uint x )
 		{
 			var yd = st.ScaleY = ( double )y / 96.0;
+			if( yd > MaxYDpi )
+				yd = MaxYDpi;
+			else if( yd < MinYDpi )
+				yd = MinYDpi;
 			var xd = st.ScaleX = ( double )x / 96.0;
+			if( xd > MaxXDpi )
+				xd = MaxXDpi;
+			else if( xd < MinXDpi )
+				xd = MinXDpi;
 			Height *= yd / _dpiY;
 			Width *= xd / _dpiX;
 			_dpiY = yd;
@@ -108,13 +149,29 @@ namespace Mntone.PerMonitorDpiTestApplication.Views.Infrastructure
 
 		#region 依存プロパティー
 
-		public bool IsPerMonitorDpi
+		public DpiMode DpiMode
 		{
-			get { return ( bool )GetValue( IsPerMonitorDpiProperty ); }
-			set { SetValue( IsPerMonitorDpiProperty, value ); }
+			get { return ( DpiMode )GetValue( DpiModeProperty ); }
+			set { SetValue( DpiModeProperty, value ); }
 		}
-		public static readonly DependencyProperty IsPerMonitorDpiProperty
-			= DependencyProperty.Register( "IsPerMonitorDpi", typeof( bool ), typeof( PmWindow ), new PropertyMetadata( true ) );
+		public static readonly DependencyProperty DpiModeProperty
+			= DependencyProperty.Register( "DpiMode", typeof( DpiMode ), typeof( PmWindow ), new PropertyMetadata( DpiMode.System ) );
+
+		public double MinYDpi
+		{
+			get { return ( double )GetValue( MinYDpiProperty ); }
+			set { SetValue( MinYDpiProperty, value ); }
+		}
+		public static readonly DependencyProperty MinYDpiProperty
+			= DependencyProperty.Register( "MinYDpi", typeof( double ), typeof( PmWindow ), new PropertyMetadata( double.MinValue ) );
+
+		public double MinXDpi
+		{
+			get { return ( double )GetValue( MinXDpiProperty ); }
+			set { SetValue( MinXDpiProperty, value ); }
+		}
+		public static readonly DependencyProperty MinXDpiProperty
+			= DependencyProperty.Register( "MinXDpi", typeof( double ), typeof( PmWindow ), new PropertyMetadata( double.MinValue ) );
 
 		public double MaxYDpi
 		{
@@ -122,7 +179,7 @@ namespace Mntone.PerMonitorDpiTestApplication.Views.Infrastructure
 			set { SetValue( MaxYDpiProperty, value ); }
 		}
 		public static readonly DependencyProperty MaxYDpiProperty
-			= DependencyProperty.Register( "MaxYDpi", typeof( double ), typeof( PmWindow ), new PropertyMetadata( 0.0 ) );
+			= DependencyProperty.Register( "MaxYDpi", typeof( double ), typeof( PmWindow ), new PropertyMetadata( double.MaxValue ) );
 
 		public double MaxXDpi
 		{
@@ -130,7 +187,7 @@ namespace Mntone.PerMonitorDpiTestApplication.Views.Infrastructure
 			set { SetValue( MaxXDpiProperty, value ); }
 		}
 		public static readonly DependencyProperty MaxXDpiProperty
-			= DependencyProperty.Register( "MaxXDpi", typeof( double ), typeof( PmWindow ), new PropertyMetadata( 0.0 ) );
+			= DependencyProperty.Register( "MaxXDpi", typeof( double ), typeof( PmWindow ), new PropertyMetadata( double.MaxValue ) );
 
 		#endregion
 	}
