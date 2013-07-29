@@ -12,3 +12,9 @@ This library supports per monitor dpi for WPF. You can use this library very eas
 
 ## License
 MIT Licence
+
+## Screen shot
+![screen shot No. 1](http://mntone.net/i/pmd.png)
+
+## Donwload (binary)
+1.0.0.0 [http://mntone.net/download.php?sid=pmd&vid=v1000](http://mntone.net/download.php?sid=pmd&vid=v1000)
