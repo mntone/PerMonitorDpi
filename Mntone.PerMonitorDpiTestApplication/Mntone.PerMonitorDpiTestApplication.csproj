@@ -56,15 +56,25 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Views\Infrastructure\Win32\MonitorDefaultTo.cs" />
-    <Compile Include="Views\Infrastructure\Win32\MonitorDpiType.cs" />
-    <Compile Include="Views\Infrastructure\Win32\NativeHelper.cs" />
-    <Compile Include="Views\Infrastructure\Win32\NativeMethods.cs" />
-    <Compile Include="Views\Infrastructure\Win32\WindowMessage.cs" />
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="..\Mntone.PerMonitorDpi\Win32\MonitorDefaultTo.cs">
+      <Link>Views\Infrastructure\Win32\MonitorDefaultTo.cs</Link>
+    </Compile>
+    <Compile Include="..\Mntone.PerMonitorDpi\Win32\MonitorDpiType.cs">
+      <Link>Views\Infrastructure\Win32\MonitorDpiType.cs</Link>
+    </Compile>
+    <Compile Include="..\Mntone.PerMonitorDpi\Win32\NativeHelper.cs">
+      <Link>Views\Infrastructure\Win32\NativeHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\Mntone.PerMonitorDpi\Win32\NativeMethods.cs">
+      <Link>Views\Infrastructure\Win32\NativeMethods.cs</Link>
+    </Compile>
+    <Compile Include="..\Mntone.PerMonitorDpi\Win32\WindowMessage.cs">
+      <Link>Views\Infrastructure\Win32\WindowMessage.cs</Link>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
