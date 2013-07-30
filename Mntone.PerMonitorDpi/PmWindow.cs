@@ -39,10 +39,10 @@ namespace Mntone.PerMonitorDpi
 			var wmMsg = ( WindowMessage )msg;
 			switch( wmMsg )
 			{
-			case WindowMessage.DISPLAYCHANGE:
+			case WindowMessage.DisplayChange:
 				CheckDpi();
 				break;
-			case WindowMessage.DPICHANGED:
+			case WindowMessage.DpiChanged:
 				if( DpiMode == DpiMode.System )
 				{
 					var xDpi = NativeHelper.GetHiWord( ( uint )wParam );
