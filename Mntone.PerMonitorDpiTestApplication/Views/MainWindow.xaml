@@ -6,7 +6,7 @@
 	xmlns:pm="clr-namespace:Mntone.PerMonitorDpi;assembly=Mntone.PerMonitorDpi"
 	xmlns:local="clr-namespace:Mntone.PerMonitorDpiTestApplication"
     Title="Per monitor dpi testing application"
-	Height="560"
+	SizeToContent="Height" ResizeMode="NoResize" SnapsToDevicePixels="True"
 	Width="440"
 	Background="{DynamicResource {x:Static SystemColors.MenuBarBrushKey}}"
 	FontSize="14"

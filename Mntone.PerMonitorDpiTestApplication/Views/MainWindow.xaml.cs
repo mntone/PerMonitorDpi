@@ -128,7 +128,7 @@ namespace Mntone.PerMonitorDpiTestApplication.Views
 				sxd.Text = GetDeviceCaps( hdc, DeviceCap.LOGPIXELSY ).ToString();
 				ReleaseDC( handle, hdc );
 
-				ayd.Text = axd.Text = ryd.Text = rxd.Text = "---";
+				ayd.Text = axd.Text = ryd.Text = rxd.Text = yinch.Text = xinch.Text = inch.Text = "---";
 			}
 		}
 
