@@ -11,11 +11,12 @@ namespace Mntone.PerMonitorDpiTestApplication.Views
 {
 	public partial class MainWindow: PmWindow
 	{
+		private bool _isPerMonitorEnabled = false;
+
 		public MainWindow()
 		{
 			InitializeComponent();
 
-			Loaded += MainWindow_Loaded;
 			SizeChanged += MainWindow_SizeChanged;
 		}
 
@@ -23,32 +24,47 @@ namespace Mntone.PerMonitorDpiTestApplication.Views
 		{
 			base.OnContentRendered( e );
 
-			//SetProcessDpiAwareness( PDA.PER_MONITOR_DPI_AWARE );
-			var p = PDA.DPI_UNAWARE;
-			GetProcessDpiAwareness( Process.GetCurrentProcess().Handle, ref p );
+			var os = Environment.OSVersion.Version;
+			_isPerMonitorEnabled = os >= new Version( 6, 3 );
 
-			switch( p )
+			if( _isPerMonitorEnabled )
 			{
-			case PDA.DPI_UNAWARE:
-				pda.Text = "PROCESS_DPI_UNAWARE";
-				break;
-			case PDA.SYSTEM_DPI_AWARE:
-				pda.Text = "PROCESS_DPI_AWARE";
-				pda.Foreground = Brushes.Blue;
-				break;
-			case PDA.PER_MONITOR_DPI_AWARE:
-				pda.Text = "PROCESS_MONITOR_DPI_AWARE";
-				pda.Foreground = Brushes.Red;
-				break;
-			}
-		}
 
-		private bool _loaded = false;
-		private void MainWindow_Loaded( object sender, RoutedEventArgs e )
-		{
+				//SetProcessDpiAwareness( PDA.PER_MONITOR_DPI_AWARE );
+				var p = PDA.DPI_UNAWARE;
+				GetProcessDpiAwareness( Process.GetCurrentProcess().Handle, ref p );
+
+				switch( p )
+				{
+				case PDA.DPI_UNAWARE:
+					pda.Text = "PROCESS_DPI_UNAWARE";
+					break;
+				case PDA.SYSTEM_DPI_AWARE:
+					pda.Text = "PROCESS_DPI_AWARE";
+					pda.Foreground = Brushes.Blue;
+					break;
+				case PDA.PER_MONITOR_DPI_AWARE:
+					pda.Text = "PROCESS_MONITOR_DPI_AWARE";
+					pda.Foreground = Brushes.Red;
+					break;
+				}
+			}
+			else
+			{
+				if( IsProcessDPIAware() )
+				{
+					pda.Text = "PROCESS_DPI_AWARE";
+					pda.Foreground = Brushes.Blue;
+				}
+				else
+					pda.Text = "PROCESS_DPI_UNAWARE";
+			}
+
 			_loaded = true;
 			Update();
 		}
+
+		private bool _loaded = false;
 
 		protected override void OnLocationChanged( EventArgs e )
 		{
@@ -73,34 +89,224 @@ namespace Mntone.PerMonitorDpiTestApplication.Views
 			h.Text = ActualHeight.ToString();
 			w.Text = ActualWidth.ToString();
 
-			var hmonitor = NativeMethods.MonitorFromWindow( ( ( HwndSource )PresentationSource.FromVisual( this ) ).Handle, MonitorDefaultTo.Nearest );
-			
-			uint yDpi = 0, xDpi = 0;
+			var handle = ( ( HwndSource )PresentationSource.FromVisual( this ) ).Handle;
+			if( _isPerMonitorEnabled )
+			{
+				var hmonitor = NativeMethods.MonitorFromWindow( handle, MonitorDefaultTo.Nearest );
 
-			NativeMethods.GetDpiForMonitor( hmonitor, MonitorDpiType.EffectiveDpi, ref xDpi, ref yDpi );
-			syd.Text = yDpi.ToString();
-			sxd.Text = xDpi.ToString();
+				uint yDpi = 0, xDpi = 0;
 
-			NativeMethods.GetDpiForMonitor( hmonitor, MonitorDpiType.AngularDpi, ref xDpi, ref yDpi );
-			ayd.Text = yDpi.ToString();
-			axd.Text = xDpi.ToString();
+				NativeMethods.GetDpiForMonitor( hmonitor, MonitorDpiType.EffectiveDpi, ref xDpi, ref yDpi );
+				syd.Text = yDpi.ToString();
+				sxd.Text = xDpi.ToString();
 
-			NativeMethods.GetDpiForMonitor( hmonitor, MonitorDpiType.RawDpi, ref xDpi, ref yDpi );
-			ryd.Text = yDpi.ToString();
-			rxd.Text = xDpi.ToString();
+				NativeMethods.GetDpiForMonitor( hmonitor, MonitorDpiType.AngularDpi, ref xDpi, ref yDpi );
+				ayd.Text = yDpi.ToString();
+				axd.Text = xDpi.ToString();
 
-			var mie = new MonitorInfoEx();
-			mie.Init();
-			GetMonitorInfo( hmonitor, ref mie );
+				NativeMethods.GetDpiForMonitor( hmonitor, MonitorDpiType.RawDpi, ref xDpi, ref yDpi );
+				ryd.Text = yDpi.ToString();
+				rxd.Text = xDpi.ToString();
 
-			double yi, xi, i;
-			yi = ( double )( mie.Monitor.Bottom - mie.Monitor.Top ) / ( double )yDpi;
-			xi = ( double )( mie.Monitor.Right - mie.Monitor.Left ) / ( double )xDpi;
-			i = Math.Sqrt( Math.Pow( yi, 2 ) + Math.Pow( xi, 2 ) );
+				var mie = new MonitorInfoEx();
+				mie.Init();
+				GetMonitorInfo( hmonitor, ref mie );
 
-			yinch.Text = yi.ToString( "0.000" );
-			xinch.Text = xi.ToString( "0.000" );
-			inch.Text = i.ToString( "0.000" );
+				double yi, xi, i;
+				yi = ( double )( mie.Monitor.Bottom - mie.Monitor.Top ) / ( double )yDpi;
+				xi = ( double )( mie.Monitor.Right - mie.Monitor.Left ) / ( double )xDpi;
+				i = Math.Sqrt( Math.Pow( yi, 2 ) + Math.Pow( xi, 2 ) );
+
+				yinch.Text = yi.ToString( "0.000" );
+				xinch.Text = xi.ToString( "0.000" );
+				inch.Text = i.ToString( "0.000" );
+			}
+			else
+			{
+				var hdc = GetDC( handle );
+				syd.Text = GetDeviceCaps( hdc, DeviceCap.LOGPIXELSY ).ToString();
+				sxd.Text = GetDeviceCaps( hdc, DeviceCap.LOGPIXELSY ).ToString();
+				ReleaseDC( handle, hdc );
+
+				ayd.Text = axd.Text = ryd.Text = rxd.Text = "---";
+			}
+		}
+
+		[DllImport( "user32.dll" )]
+		private static extern IntPtr GetDC( IntPtr hwnd );
+
+		[DllImport( "user32.dll" )]
+		private static extern bool ReleaseDC( IntPtr hwnd, IntPtr hdc );
+
+		[DllImport( "gdi32.dll" )]
+		private static extern int GetDeviceCaps( IntPtr hdc, DeviceCap nIndex );
+
+		[DllImport( "user32.dll" )]
+		private static extern bool IsProcessDPIAware();
+
+		public enum DeviceCap: int
+		{
+			/// <summary>
+			/// Device driver version
+			/// </summary>
+			DRIVERVERSION = 0,
+			/// <summary>
+			/// Device classification
+			/// </summary>
+			TECHNOLOGY = 2,
+			/// <summary>
+			/// Horizontal size in millimeters
+			/// </summary>
+			HORZSIZE = 4,
+			/// <summary>
+			/// Vertical size in millimeters
+			/// </summary>
+			VERTSIZE = 6,
+			/// <summary>
+			/// Horizontal width in pixels
+			/// </summary>
+			HORZRES = 8,
+			/// <summary>
+			/// Vertical height in pixels
+			/// </summary>
+			VERTRES = 10,
+			/// <summary>
+			/// Number of bits per pixel
+			/// </summary>
+			BITSPIXEL = 12,
+			/// <summary>
+			/// Number of planes
+			/// </summary>
+			PLANES = 14,
+			/// <summary>
+			/// Number of brushes the device has
+			/// </summary>
+			NUMBRUSHES = 16,
+			/// <summary>
+			/// Number of pens the device has
+			/// </summary>
+			NUMPENS = 18,
+			/// <summary>
+			/// Number of markers the device has
+			/// </summary>
+			NUMMARKERS = 20,
+			/// <summary>
+			/// Number of fonts the device has
+			/// </summary>
+			NUMFONTS = 22,
+			/// <summary>
+			/// Number of colors the device supports
+			/// </summary>
+			NUMCOLORS = 24,
+			/// <summary>
+			/// Size required for device descriptor
+			/// </summary>
+			PDEVICESIZE = 26,
+			/// <summary>
+			/// Curve capabilities
+			/// </summary>
+			CURVECAPS = 28,
+			/// <summary>
+			/// Line capabilities
+			/// </summary>
+			LINECAPS = 30,
+			/// <summary>
+			/// Polygonal capabilities
+			/// </summary>
+			POLYGONALCAPS = 32,
+			/// <summary>
+			/// Text capabilities
+			/// </summary>
+			TEXTCAPS = 34,
+			/// <summary>
+			/// Clipping capabilities
+			/// </summary>
+			CLIPCAPS = 36,
+			/// <summary>
+			/// Bitblt capabilities
+			/// </summary>
+			RASTERCAPS = 38,
+			/// <summary>
+			/// Length of the X leg
+			/// </summary>
+			ASPECTX = 40,
+			/// <summary>
+			/// Length of the Y leg
+			/// </summary>
+			ASPECTY = 42,
+			/// <summary>
+			/// Length of the hypotenuse
+			/// </summary>
+			ASPECTXY = 44,
+			/// <summary>
+			/// Shading and Blending caps
+			/// </summary>
+			SHADEBLENDCAPS = 45,
+
+			/// <summary>
+			/// Logical pixels inch in X
+			/// </summary>
+			LOGPIXELSX = 88,
+			/// <summary>
+			/// Logical pixels inch in Y
+			/// </summary>
+			LOGPIXELSY = 90,
+
+			/// <summary>
+			/// Number of entries in physical palette
+			/// </summary>
+			SIZEPALETTE = 104,
+			/// <summary>
+			/// Number of reserved entries in palette
+			/// </summary>
+			NUMRESERVED = 106,
+			/// <summary>
+			/// Actual color resolution
+			/// </summary>
+			COLORRES = 108,
+
+			// Printing related DeviceCaps. These replace the appropriate Escapes
+			/// <summary>
+			/// Physical Width in device units
+			/// </summary>
+			PHYSICALWIDTH = 110,
+			/// <summary>
+			/// Physical Height in device units
+			/// </summary>
+			PHYSICALHEIGHT = 111,
+			/// <summary>
+			/// Physical Printable Area x margin
+			/// </summary>
+			PHYSICALOFFSETX = 112,
+			/// <summary>
+			/// Physical Printable Area y margin
+			/// </summary>
+			PHYSICALOFFSETY = 113,
+			/// <summary>
+			/// Scaling factor x
+			/// </summary>
+			SCALINGFACTORX = 114,
+			/// <summary>
+			/// Scaling factor y
+			/// </summary>
+			SCALINGFACTORY = 115,
+
+			/// <summary>
+			/// Current vertical refresh rate of the display device (for displays only) in Hz
+			/// </summary>
+			VREFRESH = 116,
+			/// <summary>
+			/// Horizontal width of entire desktop in pixels
+			/// </summary>
+			DESKTOPVERTRES = 117,
+			/// <summary>
+			/// Vertical height of entire desktop in pixels
+			/// </summary>
+			DESKTOPHORZRES = 118,
+			/// <summary>
+			/// Preferred blt alignment
+			/// </summary>
+			BLTALIGNMENT = 119
 		}
 
 		public enum PDA

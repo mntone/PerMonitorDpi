@@ -9,13 +9,19 @@ namespace Mntone.PerMonitorDpi
 {
 	public class PmWindow: Window
 	{
+		private bool _isPerMonitorEnabled = false;
 		private double _dpiY = 1.0, _dpiX = 1.0;
 		private HwndSource _hwndSource;
 
 		protected override void OnInitialized( EventArgs e )
 		{
 			base.OnInitialized( e );
-			Loaded += PmWindow_Loaded;
+
+			var os = Environment.OSVersion.Version;
+			_isPerMonitorEnabled = os >= new Version( 6, 3 );
+
+			if( _isPerMonitorEnabled )
+				Loaded += PmWindow_Loaded;
 		}
 
 		private void PmWindow_Loaded( object sender, RoutedEventArgs e )
@@ -30,7 +36,9 @@ namespace Mntone.PerMonitorDpi
 
 		protected override void OnClosing( CancelEventArgs e )
 		{
-			_hwndSource.RemoveHook( WndProc );
+			if( _isPerMonitorEnabled )
+				_hwndSource.RemoveHook( WndProc );
+
 			base.OnClosing( e );
 		}
 
