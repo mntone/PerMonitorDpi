@@ -12,6 +12,7 @@ namespace Mntone.PerMonitorDpiTestApplication.Views
 {
 	public partial class MainWindow: PmWindow
 	{
+		private bool _isHighDpiEnabled = false;
 		private bool _isPerMonitorEnabled = false;
 
 		public MainWindow()
@@ -27,6 +28,7 @@ namespace Mntone.PerMonitorDpiTestApplication.Views
 
 			var os = Environment.OSVersion.Version;
 			_isPerMonitorEnabled = os >= new Version( 6, 3 );
+			_isHighDpiEnabled = os >= new Version( 6, 0 );
 
 			if( _isPerMonitorEnabled )
 			{
@@ -50,7 +52,7 @@ namespace Mntone.PerMonitorDpiTestApplication.Views
 					break;
 				}
 			}
-			else
+			else if( _isHighDpiEnabled )
 			{
 				if( IsProcessDPIAware() )
 				{

@@ -22,12 +22,23 @@ xmlns:asmv3="urn:schemas-microsoft-com:asm.v3"
 </pre>
 4. Your application supports per monitor dpi!
 
+## Description
+Two versions is the same code.
+
+### for .NET 4.0 (Client Profile) dll
+- Windows XP or later
+
+### for .NET 4.5 dll
+- Windows Vista or later
+
 ## License
 MIT Licence
 
 ## Screen shot
 ![screen shot No. 1](http://mntone.net/i/pmd1010.png)
+![screen shot No. 2](http://mntone.net/i/pmd1020.png)
 
 ## Donwload (binary)
+- 1.0.2.0 [ http://mntone.net/download.php?sid=pmd&vid=v1020]( http://mntone.net/download.php?sid=pmd&vid=v1020)
 - 1.0.1.0 [ http://mntone.net/download.php?sid=pmd&vid=v1010]( http://mntone.net/download.php?sid=pmd&vid=v1010)
 - 1.0.0.0 [http://mntone.net/download.php?sid=pmd&vid=v1000](http://mntone.net/download.php?sid=pmd&vid=v1000)
