@@ -96,7 +96,7 @@ namespace Mntone.PerMonitorDpi
 			if( c == null )
 				return;
 
-			if( c.LayoutTransform == null )
+			if( c.LayoutTransform == Transform.Identity )
 			{
 				var st = new ScaleTransform();
 				CalcDpi( ref st, y, x );
