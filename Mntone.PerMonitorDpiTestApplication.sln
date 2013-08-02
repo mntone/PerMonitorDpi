@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mntone.PerMonitorDpiTestApp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mntone.PerMonitorDpi", "Mntone.PerMonitorDpi\Mntone.PerMonitorDpi.csproj", "{DCEE90A7-8C28-4F00-B474-AB182A352EA4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mntone.MonitorInformation", "Mntone.MonitorInformation\Mntone.MonitorInformation.csproj", "{EF3EAA67-9F64-4025-8041-43D878512098}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mntone.PerMonitorDpi (.NET 4.0)", "Mntone.PerMonitorDpi (.NET 4.0)\Mntone.PerMonitorDpi (.NET 4.0).csproj", "{AE01EFE3-8EAD-4496-A609-4E73AD2A0D15}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{DCEE90A7-8C28-4F00-B474-AB182A352EA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DCEE90A7-8C28-4F00-B474-AB182A352EA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DCEE90A7-8C28-4F00-B474-AB182A352EA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF3EAA67-9F64-4025-8041-43D878512098}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF3EAA67-9F64-4025-8041-43D878512098}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF3EAA67-9F64-4025-8041-43D878512098}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF3EAA67-9F64-4025-8041-43D878512098}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE01EFE3-8EAD-4496-A609-4E73AD2A0D15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE01EFE3-8EAD-4496-A609-4E73AD2A0D15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE01EFE3-8EAD-4496-A609-4E73AD2A0D15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE01EFE3-8EAD-4496-A609-4E73AD2A0D15}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

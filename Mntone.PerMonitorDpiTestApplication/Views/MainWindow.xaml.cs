@@ -1,4 +1,5 @@
-﻿using Mntone.PerMonitorDpi;
+﻿using Mntone.MonitorInformation.Models.Win32;
+using Mntone.PerMonitorDpi;
 using Mntone.PerMonitorDpi.Win32;
 using System;
 using System.Diagnostics;
@@ -108,7 +109,7 @@ namespace Mntone.PerMonitorDpiTestApplication.Views
 				ryd.Text = yDpi.ToString();
 				rxd.Text = xDpi.ToString();
 
-				var mie = new MonitorInfoEx();
+				var mie = new MonitorInfo();
 				mie.Init();
 				GetMonitorInfo( hmonitor, ref mie );
 
@@ -124,8 +125,8 @@ namespace Mntone.PerMonitorDpiTestApplication.Views
 			else
 			{
 				var hdc = GetDC( handle );
-				syd.Text = GetDeviceCaps( hdc, DeviceCap.LOGPIXELSY ).ToString();
-				sxd.Text = GetDeviceCaps( hdc, DeviceCap.LOGPIXELSY ).ToString();
+				syd.Text = GetDeviceCaps( hdc, DeviceCap.LogPixelsY ).ToString();
+				sxd.Text = GetDeviceCaps( hdc, DeviceCap.LogPixelsX ).ToString();
 				ReleaseDC( handle, hdc );
 
 				ayd.Text = axd.Text = ryd.Text = rxd.Text = yinch.Text = xinch.Text = inch.Text = "---";
@@ -133,181 +134,7 @@ namespace Mntone.PerMonitorDpiTestApplication.Views
 		}
 
 		[DllImport( "user32.dll" )]
-		private static extern IntPtr GetDC( IntPtr hwnd );
-
-		[DllImport( "user32.dll" )]
-		private static extern bool ReleaseDC( IntPtr hwnd, IntPtr hdc );
-
-		[DllImport( "gdi32.dll" )]
-		private static extern int GetDeviceCaps( IntPtr hdc, DeviceCap nIndex );
-
-		[DllImport( "user32.dll" )]
 		private static extern bool IsProcessDPIAware();
-
-		public enum DeviceCap: int
-		{
-			/// <summary>
-			/// Device driver version
-			/// </summary>
-			DRIVERVERSION = 0,
-			/// <summary>
-			/// Device classification
-			/// </summary>
-			TECHNOLOGY = 2,
-			/// <summary>
-			/// Horizontal size in millimeters
-			/// </summary>
-			HORZSIZE = 4,
-			/// <summary>
-			/// Vertical size in millimeters
-			/// </summary>
-			VERTSIZE = 6,
-			/// <summary>
-			/// Horizontal width in pixels
-			/// </summary>
-			HORZRES = 8,
-			/// <summary>
-			/// Vertical height in pixels
-			/// </summary>
-			VERTRES = 10,
-			/// <summary>
-			/// Number of bits per pixel
-			/// </summary>
-			BITSPIXEL = 12,
-			/// <summary>
-			/// Number of planes
-			/// </summary>
-			PLANES = 14,
-			/// <summary>
-			/// Number of brushes the device has
-			/// </summary>
-			NUMBRUSHES = 16,
-			/// <summary>
-			/// Number of pens the device has
-			/// </summary>
-			NUMPENS = 18,
-			/// <summary>
-			/// Number of markers the device has
-			/// </summary>
-			NUMMARKERS = 20,
-			/// <summary>
-			/// Number of fonts the device has
-			/// </summary>
-			NUMFONTS = 22,
-			/// <summary>
-			/// Number of colors the device supports
-			/// </summary>
-			NUMCOLORS = 24,
-			/// <summary>
-			/// Size required for device descriptor
-			/// </summary>
-			PDEVICESIZE = 26,
-			/// <summary>
-			/// Curve capabilities
-			/// </summary>
-			CURVECAPS = 28,
-			/// <summary>
-			/// Line capabilities
-			/// </summary>
-			LINECAPS = 30,
-			/// <summary>
-			/// Polygonal capabilities
-			/// </summary>
-			POLYGONALCAPS = 32,
-			/// <summary>
-			/// Text capabilities
-			/// </summary>
-			TEXTCAPS = 34,
-			/// <summary>
-			/// Clipping capabilities
-			/// </summary>
-			CLIPCAPS = 36,
-			/// <summary>
-			/// Bitblt capabilities
-			/// </summary>
-			RASTERCAPS = 38,
-			/// <summary>
-			/// Length of the X leg
-			/// </summary>
-			ASPECTX = 40,
-			/// <summary>
-			/// Length of the Y leg
-			/// </summary>
-			ASPECTY = 42,
-			/// <summary>
-			/// Length of the hypotenuse
-			/// </summary>
-			ASPECTXY = 44,
-			/// <summary>
-			/// Shading and Blending caps
-			/// </summary>
-			SHADEBLENDCAPS = 45,
-
-			/// <summary>
-			/// Logical pixels inch in X
-			/// </summary>
-			LOGPIXELSX = 88,
-			/// <summary>
-			/// Logical pixels inch in Y
-			/// </summary>
-			LOGPIXELSY = 90,
-
-			/// <summary>
-			/// Number of entries in physical palette
-			/// </summary>
-			SIZEPALETTE = 104,
-			/// <summary>
-			/// Number of reserved entries in palette
-			/// </summary>
-			NUMRESERVED = 106,
-			/// <summary>
-			/// Actual color resolution
-			/// </summary>
-			COLORRES = 108,
-
-			// Printing related DeviceCaps. These replace the appropriate Escapes
-			/// <summary>
-			/// Physical Width in device units
-			/// </summary>
-			PHYSICALWIDTH = 110,
-			/// <summary>
-			/// Physical Height in device units
-			/// </summary>
-			PHYSICALHEIGHT = 111,
-			/// <summary>
-			/// Physical Printable Area x margin
-			/// </summary>
-			PHYSICALOFFSETX = 112,
-			/// <summary>
-			/// Physical Printable Area y margin
-			/// </summary>
-			PHYSICALOFFSETY = 113,
-			/// <summary>
-			/// Scaling factor x
-			/// </summary>
-			SCALINGFACTORX = 114,
-			/// <summary>
-			/// Scaling factor y
-			/// </summary>
-			SCALINGFACTORY = 115,
-
-			/// <summary>
-			/// Current vertical refresh rate of the display device (for displays only) in Hz
-			/// </summary>
-			VREFRESH = 116,
-			/// <summary>
-			/// Horizontal width of entire desktop in pixels
-			/// </summary>
-			DESKTOPVERTRES = 117,
-			/// <summary>
-			/// Vertical height of entire desktop in pixels
-			/// </summary>
-			DESKTOPHORZRES = 118,
-			/// <summary>
-			/// Preferred blt alignment
-			/// </summary>
-			BLTALIGNMENT = 119
-		}
 
 		public enum PDA
 		{
@@ -322,96 +149,30 @@ namespace Mntone.PerMonitorDpiTestApplication.Views
 		[DllImport( "SHCore.dll", CharSet = CharSet.Unicode, PreserveSig = false )]
 		private static extern void GetProcessDpiAwareness( IntPtr hprocess, ref PDA value );
 
-
-		// size of a device name string
-		private const int CCHDEVICENAME = 32;
-
-		/// <summary>
-		/// The MONITORINFOEX structure contains information about a display monitor.
-		/// The GetMonitorInfo function stores information into a MONITORINFOEX structure or a MONITORINFO structure.
-		/// The MONITORINFOEX structure is a superset of the MONITORINFO structure. The MONITORINFOEX structure adds a string member to contain a name
-		/// for the display monitor.
-		/// </summary>
-		[StructLayout( LayoutKind.Sequential, CharSet = CharSet.Unicode )]
-		internal struct MonitorInfoEx
+		[StructLayout( LayoutKind.Sequential )]
+		internal struct MonitorInfo
 		{
-			/// <summary>
-			/// The size, in bytes, of the structure. Set this member to sizeof(MONITORINFOEX) (72) before calling the GetMonitorInfo function.
-			/// Doing so lets the function determine the type of structure you are passing to it.
-			/// </summary>
 			public int Size;
-
-			/// <summary>
-			/// A RECT structure that specifies the display monitor rectangle, expressed in virtual-screen coordinates.
-			/// Note that if the monitor is not the primary display monitor, some of the rectangle's coordinates may be negative values.
-			/// </summary>
-			public RectStruct Monitor;
-
-			/// <summary>
-			/// A RECT structure that specifies the work area rectangle of the display monitor that can be used by applications,
-			/// expressed in virtual-screen coordinates. Windows uses this rectangle to maximize an application on the monitor.
-			/// The rest of the area in rcMonitor contains system windows such as the task bar and side bars.
-			/// Note that if the monitor is not the primary display monitor, some of the rectangle's coordinates may be negative values.
-			/// </summary>
-			public RectStruct WorkArea;
-
-			/// <summary>
-			/// The attributes of the display monitor.
-			///
-			/// This member can be the following value:
-			///   1 : MONITORINFOF_PRIMARY
-			/// </summary>
+			public NativeRect Monitor;
+			public NativeRect WorkArea;
 			public uint Flags;
-
-			/// <summary>
-			/// A string that specifies the device name of the monitor being used. Most applications have no use for a display monitor name,
-			/// and so can save some bytes by using a MONITORINFO structure.
-			/// </summary>
-			[MarshalAs( UnmanagedType.ByValTStr, SizeConst = CCHDEVICENAME )]
-			public string DeviceName;
 
 			public void Init()
 			{
-				this.Size = 40 + 2 * CCHDEVICENAME;
-				this.DeviceName = string.Empty;
+				Size = 40;
 			}
 		}
 
-		/// <summary>
-		/// The RECT structure defines the coordinates of the upper-left and lower-right corners of a rectangle.
-		/// </summary>
-		/// <see cref="http://msdn.microsoft.com/en-us/library/dd162897%28VS.85%29.aspx"/>
-		/// <remarks>
-		/// By convention, the right and bottom edges of the rectangle are normally considered exclusive.
-		/// In other words, the pixel whose coordinates are ( right, bottom ) lies immediately outside of the the rectangle.
-		/// For example, when RECT is passed to the FillRect function, the rectangle is filled up to, but not including,
-		/// the right column and bottom row of pixels. This structure is identical to the RECTL structure.
-		/// </remarks>
-		[StructLayout( LayoutKind.Sequential )]
-		public struct RectStruct
-		{
-			/// <summary>
-			/// The x-coordinate of the upper-left corner of the rectangle.
-			/// </summary>
-			public int Left;
+		[DllImport( "gdi32.dll" )]
+		public static extern int GetDeviceCaps( IntPtr hdc, DeviceCap index );
 
-			/// <summary>
-			/// The y-coordinate of the upper-left corner of the rectangle.
-			/// </summary>
-			public int Top;
+		[DllImport( "user32.dll" )]
+		internal static extern IntPtr GetDC( IntPtr hwnd );
 
-			/// <summary>
-			/// The x-coordinate of the lower-right corner of the rectangle.
-			/// </summary>
-			public int Right;
-
-			/// <summary>
-			/// The y-coordinate of the lower-right corner of the rectangle.
-			/// </summary>
-			public int Bottom;
-		}
+		[DllImport( "user32.dll" )]
+		internal static extern bool ReleaseDC( IntPtr hwnd, IntPtr hdc );
 
 		[DllImport( "user32.dll", CharSet = CharSet.Unicode, SetLastError = true )]
-		private static extern bool GetMonitorInfo( IntPtr hMonitor, ref MonitorInfoEx lpmi );
+		private static extern bool GetMonitorInfo( IntPtr hMonitor, ref MonitorInfo lpmi );
 	}
 }

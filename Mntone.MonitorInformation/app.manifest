@@ -6,7 +6,7 @@
   xmlns:asmv2="urn:schemas-microsoft-com:asm.v2"
   xmlns:asmv3="urn:schemas-microsoft-com:asm.v3"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <assemblyIdentity version="1.0.1.0" name="Mntone.PerMonitorDpiTestApplication.app"/>
+  <assemblyIdentity version="1.0.0.0" name="Mntone.MonitorInformation.app"/>
   <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">
     <application>
       <supportedOS Id="{e2011457-1546-43c5-a5fe-008deee3d3f0}"/><!-- Windows Vista -->

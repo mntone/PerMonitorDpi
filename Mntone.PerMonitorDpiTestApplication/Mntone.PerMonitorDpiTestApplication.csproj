@@ -60,6 +60,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="..\Mntone.MonitorInformation\Models\Win32\DeviceCap.cs">
+      <Link>Views\Infrastructure\Win32\DeviceCap.cs</Link>
+    </Compile>
+    <Compile Include="..\Mntone.MonitorInformation\Models\Win32\NativePoint.cs">
+      <Link>Views\Infrastructure\Win32\NativePoint.cs</Link>
+    </Compile>
+    <Compile Include="..\Mntone.MonitorInformation\Models\Win32\NativeRect.cs">
+      <Link>Views\Infrastructure\Win32\NativeRect.cs</Link>
+    </Compile>
     <Compile Include="..\Mntone.PerMonitorDpi\Win32\MonitorDefaultTo.cs">
       <Link>Views\Infrastructure\Win32\MonitorDefaultTo.cs</Link>
     </Compile>

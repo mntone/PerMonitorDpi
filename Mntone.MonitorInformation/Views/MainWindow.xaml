@@ -1,0 +1,99 @@
+﻿<pm:PmWindow
+	x:Class="Mntone.MonitorInformation.Views.MainWindow"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
+	xmlns:pm="clr-namespace:Mntone.PerMonitorDpi;assembly=Mntone.PerMonitorDpi"
+	xmlns:vm="clr-namespace:Mntone.MonitorInformation.ViewModels"
+	Title="Monitors' information"
+	Background="{DynamicResource {x:Static SystemColors.MenuBarBrushKey}}"
+	SizeToContent="Height"
+	SnapsToDevicePixels="True"
+	Width="666"
+	ResizeMode="NoResize">
+	
+	<i:Interaction.Triggers>
+		<i:EventTrigger EventName="ContentRendered">
+			<l:LivetCallMethodAction MethodTarget="{Binding}" MethodName="Initilize"/>
+		</i:EventTrigger>
+		<i:EventTrigger EventName="Closed">
+			<l:DataContextDisposeAction/>
+		</i:EventTrigger>
+	</i:Interaction.Triggers>
+
+	<pm:PmWindow.DataContext>
+		<vm:MainWindowViewModel/>
+	</pm:PmWindow.DataContext>
+
+	<pm:PmWindow.Resources>
+		<Style x:Key="TitleText" TargetType="TextBlock">
+			<Setter Property="FontSize" Value="28"/>
+			<Setter Property="FontFamily" Value="Segoe UI Light"/>
+		</Style>
+		<Style TargetType="TextBlock">
+			<Setter Property="FontSize" Value="14"/>
+			<Setter Property="FontFamily" Value="Segoe UI"/>
+		</Style>
+		<Style x:Key="DisplaysListArea" TargetType="Border">
+			<Setter Property="Background" Value="White"/>
+			<Setter Property="BorderBrush" Value="Gray"/>
+			<Setter Property="BorderThickness" Value="2"/>
+			<Setter Property="Padding" Value="10"/>
+		</Style>
+	</pm:PmWindow.Resources>
+	
+    <Grid Margin="11">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="11"/>
+			<RowDefinition Height="366"/>
+			<RowDefinition Height="11"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+		
+		<TextBlock Text="Monitors' Information" Style="{StaticResource TitleText}"/>
+
+		<Border Grid.Row="2"
+				Style="{StaticResource DisplaysListArea}">
+			<ItemsControl ItemsSource="{Binding Monitors}" IsTabStop="False">
+				<ItemsControl.LayoutTransform>
+					<ScaleTransform ScaleY="{Binding ScaleFactor}" ScaleX="{Binding ScaleFactor}"/>
+				</ItemsControl.LayoutTransform>
+				<ItemsControl.RenderTransform>
+					<TranslateTransform Y="{Binding OffsetY}" X="{Binding OffsetX}"/>
+				</ItemsControl.RenderTransform>
+				<ItemsControl.ItemsPanel>
+					<ItemsPanelTemplate>
+						<Canvas/>
+					</ItemsPanelTemplate>
+				</ItemsControl.ItemsPanel>
+				<ItemsControl.ItemContainerStyle>
+					<Style>
+						<Setter Property="Canvas.Top" Value="{Binding Domain.Area.Y}"/>
+						<Setter Property="Canvas.Left" Value="{Binding Domain.Area.X}"/>
+						<Style.Triggers>
+							<Trigger Property="Canvas.IsMouseOver" Value="True">
+								<Setter Property="Control.ToolTip" Value="{Binding Domain.Description}"/>
+							</Trigger>
+						</Style.Triggers>
+					</Style>
+				</ItemsControl.ItemContainerStyle>
+				<ItemsControl.ItemTemplate>
+					<DataTemplate>
+						<Border Height="{Binding Domain.Area.Height}"
+								Width="{Binding Domain.Area.Width}"
+								BorderBrush="Violet"
+								BorderThickness="2"
+								Margin="-2">
+							<TextBlock Text="{Binding Domain.No}" FontSize="512"/>
+						</Border>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
+		</Border>
+		<ScrollViewer Grid.Row="4">
+			
+		</ScrollViewer>
+	</Grid>
+</pm:PmWindow>

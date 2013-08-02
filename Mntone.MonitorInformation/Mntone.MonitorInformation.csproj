@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{EF3EAA67-9F64-4025-8041-43D878512098}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Mntone.MonitorInformation</RootNamespace>
+    <AssemblyName>Mntone.MonitorInformation</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Livet, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b0b1d3f711ef38cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\LivetCask.1.1.0.0\lib\net40\Livet.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\LivetCask.1.1.0.0\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\LivetCask.1.1.0.0\lib\net40\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="Views\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Domains\Monitor.cs" />
+    <Compile Include="Models\Retriever.cs" />
+    <Compile Include="Models\RetrievingHelper.cs" />
+    <Compile Include="Models\Win32\DisplayConfigTopologyId.cs" />
+    <Compile Include="Models\Win32\QueryDisplayFlags.cs" />
+    <Compile Include="Models\Win32\D3DmdtVideoSignalStandard.cs" />
+    <Compile Include="Models\Win32\DeviceCap.cs" />
+    <Compile Include="Models\Win32\DeviceContextHandle.cs" />
+    <Compile Include="Models\Win32\DisplayConfig2DRegion.cs" />
+    <Compile Include="Models\Win32\DisplayConfigFlags.cs" />
+    <Compile Include="Models\Win32\DisplayConfigModeInfo.cs" />
+    <Compile Include="Models\Win32\DisplayConfigModeInfoType.cs" />
+    <Compile Include="Models\Win32\DisplayConfigPathInfo.cs" />
+    <Compile Include="Models\Win32\DisplayConfigPathSourceInfo.cs" />
+    <Compile Include="Models\Win32\DisplayConfigPathTargetInfo.cs" />
+    <Compile Include="Models\Win32\DisplayConfigPixelFormat.cs" />
+    <Compile Include="Models\Win32\DisplayConfigRational.cs" />
+    <Compile Include="Models\Win32\DisplayConfigRotation.cs" />
+    <Compile Include="Models\Win32\DisplayConfigScaling.cs" />
+    <Compile Include="Models\Win32\DisplayConfigScanLineOrdering.cs" />
+    <Compile Include="Models\Win32\DisplayConfigSourceMode.cs" />
+    <Compile Include="Models\Win32\DisplayConfigSourceStatus.cs" />
+    <Compile Include="Models\Win32\DisplayConfigTargetMode.cs" />
+    <Compile Include="Models\Win32\DisplayConfigTargetStatus.cs" />
+    <Compile Include="Models\Win32\DisplayConfigVideoOutputTechnology.cs" />
+    <Compile Include="Models\Win32\DisplayConfigVideoSignalInfo.cs" />
+    <Compile Include="Models\Win32\DisplayTechnologyType.cs" />
+    <Compile Include="Models\Win32\LUID.cs" />
+    <Compile Include="Models\Win32\MonitorCapabilities.cs" />
+    <Compile Include="Models\Win32\MonitorDpiType.cs" />
+    <Compile Include="Models\Win32\MonitorSupportedColorTemperature.cs" />
+    <Compile Include="Models\Win32\NativePoint.cs" />
+    <Compile Include="Models\Win32\NativeRect.cs" />
+    <Compile Include="Models\Win32\PhysicalMonitor.cs" />
+    <Compile Include="Models\Win32\SafeNativeMethods.cs" />
+    <Compile Include="Models\Win32\SdcFlags.cs" />
+    <Compile Include="Models\Win32\UnsafeNativeMethods.cs" />
+    <Compile Include="ViewModels\Infrastructure\RectHelper.cs" />
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\MonitorViewModel.cs" />
+    <Compile Include="Views\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="app.manifest" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Mntone.PerMonitorDpi %28.NET 4.0%29\Mntone.PerMonitorDpi %28.NET 4.0%29.csproj">
+      <Project>{ae01efe3-8ead-4496-a609-4e73ad2a0d15}</Project>
+      <Name>Mntone.PerMonitorDpi %28.NET 4.0%29</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
