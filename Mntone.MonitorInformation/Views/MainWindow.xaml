@@ -6,11 +6,12 @@
     xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
 	xmlns:pm="clr-namespace:Mntone.PerMonitorDpi;assembly=Mntone.PerMonitorDpi"
 	xmlns:vm="clr-namespace:Mntone.MonitorInformation.ViewModels"
+	xmlns:local="clr-namespace:Mntone.MonitorInformation.Views"
 	Title="Monitors' information"
 	Background="{DynamicResource {x:Static SystemColors.MenuBarBrushKey}}"
 	SizeToContent="Height"
 	SnapsToDevicePixels="True"
-	Width="666"
+	Width="628"
 	ResizeMode="NoResize">
 	
 	<i:Interaction.Triggers>
@@ -47,7 +48,7 @@
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="11"/>
-			<RowDefinition Height="366"/>
+			<RowDefinition Height="348"/>
 			<RowDefinition Height="11"/>
 			<RowDefinition Height="Auto"/>
 		</Grid.RowDefinitions>
@@ -83,17 +84,37 @@
 					<DataTemplate>
 						<Border Height="{Binding Domain.Area.Height}"
 								Width="{Binding Domain.Area.Width}"
-								BorderBrush="Violet"
-								BorderThickness="2"
-								Margin="-2">
-							<TextBlock Text="{Binding Domain.No}" FontSize="512"/>
+								Background="{Binding PanelBackgroundColor}"
+								BorderBrush="{Binding PanelBorderColor}"
+								BorderThickness="4"
+								Margin="-4">
+							<Grid>
+								<TextBlock Text="{Binding Domain.No}"
+										   FontSize="384"
+										   VerticalAlignment="Center"
+										   HorizontalAlignment="Center"/>
+							</Grid>
 						</Border>
 					</DataTemplate>
 				</ItemsControl.ItemTemplate>
 			</ItemsControl>
 		</Border>
-		<ScrollViewer Grid.Row="4">
-			
+		<ScrollViewer Grid.Row="4" MaxHeight="120">
+			<ItemsControl ItemsSource="{Binding Monitors}" IsTabStop="False">
+				<ItemsControl.ItemsPanel>
+					<ItemsPanelTemplate>
+						<UniformGrid Rows="1"/>
+					</ItemsPanelTemplate>
+				</ItemsControl.ItemsPanel>
+				<ItemsControl.ItemTemplate>
+					<DataTemplate>
+						<Border MaxWidth="240">
+							<local:MonitorView/>
+						</Border>
+						<!--<TextBlock Text="{Binding Domain.Description}"/>-->
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
 		</ScrollViewer>
 	</Grid>
 </pm:PmWindow>

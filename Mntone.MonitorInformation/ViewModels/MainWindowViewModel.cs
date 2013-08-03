@@ -1,12 +1,7 @@
 ﻿using Livet;
 using Mntone.MonitorInformation.Models;
 using Mntone.MonitorInformation.ViewModels.Infrastructure;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Mntone.MonitorInformation.ViewModels
@@ -40,8 +35,11 @@ namespace Mntone.MonitorInformation.ViewModels
 			Calculate();
 		}
 
-		private const double HEIGHT = 342;
-		private const double WIDTH = 608;
+
+		#region Panel size
+
+		private const double HEIGHT = 324;
+		private const double WIDTH = 576;
 		private void Calculate()
 		{
 			var ca = new Rect();
@@ -97,5 +95,7 @@ namespace Mntone.MonitorInformation.ViewModels
 			}
 		}
 		private double _ScaleFactor = 1.0;
+
+		#endregion
 	}
 }

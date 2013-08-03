@@ -1,0 +1,46 @@
+﻿<UserControl
+	x:Class="Mntone.MonitorInformation.Views.MonitorView"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:local="clr-namespace:Mntone.MonitorInformation.Views"
+	xmlns:d="clr-namespace:Mntone.MonitorInformation.Models.Domains">
+	
+	<UserControl.Resources>
+		<local:MonitorTemplateSelector x:Key="MonitorTemplateSelector">
+			<local:MonitorTemplateSelector.MonitorDataTemplate>
+				<DataTemplate>
+					<local:Monitor/>
+				</DataTemplate>
+			</local:MonitorTemplateSelector.MonitorDataTemplate>
+			<local:MonitorTemplateSelector.Monitor60DataTemplate>
+				<DataTemplate>
+					<StackPanel>
+						<local:Monitor/>
+						<local:Monitor60/>
+					</StackPanel>
+				</DataTemplate>
+			</local:MonitorTemplateSelector.Monitor60DataTemplate>
+			<local:MonitorTemplateSelector.Monitor61DataTemplate>
+				<DataTemplate>
+					<StackPanel>
+						<local:Monitor/>
+						<local:Monitor60/>
+						<local:Monitor61/>
+					</StackPanel>
+				</DataTemplate>
+			</local:MonitorTemplateSelector.Monitor61DataTemplate>
+			<local:MonitorTemplateSelector.Monitor63DataTemplate>
+				<DataTemplate>
+					<StackPanel>
+						<local:Monitor/>
+						<local:Monitor60/>
+						<local:Monitor61/>
+						<local:Monitor63/>
+					</StackPanel>
+				</DataTemplate>
+			</local:MonitorTemplateSelector.Monitor63DataTemplate>
+		</local:MonitorTemplateSelector>
+	</UserControl.Resources>
+
+	<ContentPresenter Content="{Binding Domain}" ContentTemplateSelector="{StaticResource MonitorTemplateSelector}"/>
+</UserControl>
