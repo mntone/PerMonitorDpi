@@ -1,3 +1,7 @@
+[Obsoulte]
+
+I create new version support library, [Per-monitor DPI Support Library](https://github.com/mntone/Windows.PerMonitorDpiSupport).
+
 # project Mntone.PerMonitorDpi
 
 ## What’s project?
